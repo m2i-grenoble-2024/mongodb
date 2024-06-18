@@ -67,3 +67,6 @@ db.person.find({'skills.3': {$exists:true}});
 db.person.find({firstName:/a$/});
 
 db.person.updateMany({name:'Sommer'}, {$inc:{age:1}});
+
+//Récupérer les persons qui n'ont pas d'age et afficher le temps d'exécution de la requête et d'autres informations
+db.person.find({age:{$exists:false}}).explain('executionStats')
