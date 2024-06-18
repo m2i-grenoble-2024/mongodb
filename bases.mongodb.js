@@ -51,3 +51,18 @@ const names = ['Strom', 'Harley', 'Tharp', 'Lindquist', 'Armando', 'Nautica', 'S
 
 //Avec un skills.filter trouver une manière de créer un nouveau tableau qui
 //gardera des valeurs aléatoire dans skills, et assigner ça au skills des personnes générées
+
+//Ajouter aussi un age aléatoire entre 10 et 100 à chaque personne
+
+//Une fois que ça marche, on fait plutôt une boucle qui fait 1000 tours pour avoir quelques datas
+
+/**
+ * Requêtes à faire sur nos persons : 
+ * 1. Avec un find récupérer toutes les persons qui sont plus de 50 ans
+ * 2. Récupérer les persons qui ont comme prénom Jaylyn ou Amari
+ * 3. Récupérer les persons qui possèdent le skill PHP
+ * 4. Récupérer les persons qui ont plus de 4 skills
+ * 5. Récupérer les persons dont le prénom termine par un a
+ * 6. Faire un update pour incrémenter de 1 l'âge des personnes qui ont comme
+ * name 'Sommer'
+ */
