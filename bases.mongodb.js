@@ -43,8 +43,11 @@ const skills = ['PHP', 'JS', 'MongoDb', 'CSS', 'HTML', 'Cuisine'];
 const firstNames = ['Odalis', 'Baylie', 'Junior', 'Johnson', 'Aysha', 'Miranda', 'Gilberto', 'Christin', 'Iyanna', 'Jaylyn', 'Amari', 'Duane', 'Willis', 'Coy', 'Bernadette', 'Aniya', 'Javion', 'Raphael', 'Gerald', 'Caelan', 'Josh', 'Nehemiah', 'Keyanna', 'Sierra', 'Heriberto', 'Aisha', 'Harris', 'Dustyn', 'Anders', 'Chaya'];
 const names = ['Strom', 'Harley', 'Tharp', 'Lindquist', 'Armando', 'Nautica', 'Slack', 'Kaya', 'Potts', 'Burroughs', 'Theresa', 'Shen', 'Sommer', 'Pool', 'Fischer', 'Coy', 'Sturm', 'Alora', 'Mosher', 'Meg', 'Ly', 'Rebecca', 'Shanna', 'Hendrix', 'Lancaster', 'Destiney', 'Wooten', 'Isiah', 'Howe', 'Smyth'];
 
-// Essayer de récupérer et afficher en console log un élément random de la liste skills
+// Essayer de récupérer et afficher en console log un élément random de la liste de names
 
 //Faire une boucle de 10 tours qui va à chaque tour faire un insertOne en assignant comme nom
 //une valeur random du tableau, comme firstName, une valeur random du tableau firstName
 
+
+//Avec un skills.filter trouver une manière de créer un nouveau tableau qui
+//gardera des valeurs aléatoire dans skills, et assigner ça au skills des personnes générées
