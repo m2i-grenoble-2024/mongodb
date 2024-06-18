@@ -14,11 +14,63 @@ use('test');
  * 6. Récupérer les films qui ont été réalisés par n'importe lequel des frères Coen
  * 7. Récupérer les films qui ont un rating imdb supérieur à 7 et plus de 1000 votes
  * 8. Récupérer les films qui ont un score rottentomatoes (tomatoes dans la db)
- *    supérieur à 4 et pour les viewers et 7 pour la critique
+ *    supérieur à 4 pour les viewers et 7 pour la critique
  * 9. Récupérer les films dont le synopsys mentionne le mot 'dragon'
  * 10. Afficher les 10 films avec le meilleurs rating imdb
  */
 
-db.movies.find()
+db.movies.find({directors: 'George Miller'})
+
+db.movies.find({
+    cast: {
+        $all:['Emma Stone', 'Ryan Gosling']
+    }
+})
+//Ou bien avec un $and
+/*
+db.movies.find({
+    $and: [
+        {cast: 'Emma Stone'}, 
+        {cast:'Ryan Gosling'}
+    ]
+})
+*/
+
+db.movies.find({
+    runtime:{$gt: 120}, 
+    year: {$lt:1950}
+})
+
+db.movies.find({
+    'awards.wins': {$gte:3}
+});
+
+db.movies.find({countries:['France']}, {title:true, _id:false});
 
 
+
+db.movies.find({directors:/ Coen$/i});
+db.movies.find({
+    $or:[
+        {directors:'Ethan Coen'}, 
+        {directors:'Joel Coen'}
+    ]   
+});//avec un or pour une recherche précise
+
+db.movies.find({
+    'imdb.rating':{$gt:7}, 
+    'imdb.votes':{$gt:1000}
+})
+
+db.movies.find({
+    'tomatoes.viewer.rating':{$gt:4}, 
+    'tomatoes.critic.rating':{$gt:7}
+})
+
+db.movies.find({
+    plot: /dragon/i
+})
+
+db.movies.find({
+    'imdb.rating':{$type:'number'}
+}).sort({'imdb.rating': -1}).limit(10);
