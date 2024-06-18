@@ -1,7 +1,7 @@
 /* global use, db */
 
 //Indiquer la base de donnée à utiliser dans le fichier
-use('damFirst')
+use('test')
 
 // Afficher les base de données existantes
 db.getMongo().getDBs();
@@ -37,24 +37,12 @@ db.person.deleteMany({firstName:'Roger'})
 db.person.findOne(new ObjectId('667042e81e078566dc19d150'))
 // db.person.updateMany({}, {age: 30})
 
+db.person.find();
 
 
-const skills = ['PHP', 'JS', 'MongoDb', 'CSS', 'HTML', 'Cuisine'];
-const firstNames = ['Odalis', 'Baylie', 'Junior', 'Johnson', 'Aysha', 'Miranda', 'Gilberto', 'Christin', 'Iyanna', 'Jaylyn', 'Amari', 'Duane', 'Willis', 'Coy', 'Bernadette', 'Aniya', 'Javion', 'Raphael', 'Gerald', 'Caelan', 'Josh', 'Nehemiah', 'Keyanna', 'Sierra', 'Heriberto', 'Aisha', 'Harris', 'Dustyn', 'Anders', 'Chaya'];
-const names = ['Strom', 'Harley', 'Tharp', 'Lindquist', 'Armando', 'Nautica', 'Slack', 'Kaya', 'Potts', 'Burroughs', 'Theresa', 'Shen', 'Sommer', 'Pool', 'Fischer', 'Coy', 'Sturm', 'Alora', 'Mosher', 'Meg', 'Ly', 'Rebecca', 'Shanna', 'Hendrix', 'Lancaster', 'Destiney', 'Wooten', 'Isiah', 'Howe', 'Smyth'];
-
-// Essayer de récupérer et afficher en console log un élément random de la liste de names
-
-//Faire une boucle de 10 tours qui va à chaque tour faire un insertOne en assignant comme nom
-//une valeur random du tableau, comme firstName, une valeur random du tableau firstName
 
 
-//Avec un skills.filter trouver une manière de créer un nouveau tableau qui
-//gardera des valeurs aléatoire dans skills, et assigner ça au skills des personnes générées
 
-//Ajouter aussi un age aléatoire entre 10 et 100 à chaque personne
-
-//Une fois que ça marche, on fait plutôt une boucle qui fait 1000 tours pour avoir quelques datas
 
 /**
  * Requêtes à faire sur nos persons : 
