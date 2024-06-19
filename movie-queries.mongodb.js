@@ -74,3 +74,45 @@ db.movies.find({
 db.movies.find({
     'imdb.rating':{$type:'number'}
 }).sort({'imdb.rating': -1}).limit(10);
+
+db.comments.find();
+//Les aggregations sont une manière de faire des requête sur une collection en appliquant
+//des opérations en chaîne sur les résultats. C'est avec ça qu'on pourra faire des group by
+//par exemple
+
+//ici on utilise l'opération $match qui permet de faire l'équivalent d'un find (filtrer
+//les résultats) suivi d'un $lookup qui permet de faire l'équivalent d'un LEFT JOIN
+//Attention, l'ordre des opérations dans le pipeline a une importance et influera et sur
+//le résultat et sur les performances
+db.movies.aggregate([
+
+    {
+        $match: {title:'Les vampires'}
+    },
+    //équivalent d'un LEFT JOIN en SQL
+    {
+        $lookup: {
+            from: 'comments',
+            localField: '_id',
+            foreignField:'movie_id',
+            as: 'comments'
+        }
+    }
+])
+
+//Ici, on fait deux fois la même requête, une fois via un find et une fois via une
+//aggregation. Par défaut, mieux vaut utiliser le find, plus simple, quand on peut
+db.movies.find({directors: 'George Miller'}).sort({'imdb.rating':{$gt:7}})
+db.movies.aggregate({
+    $match: {directors: 'George Miller'},
+    $sort: {'imdb.rating':{$gt:7}}
+})
+
+//Ici on fait l'équivalent d'un GROUP BY en regroupant ensemble tous les films par
+//leur année de sortie. On peut utiliser des fonction de group sur les résultats 
+//(count, sum, avg, max, min, etc.)
+db.movies.aggregate([
+    {
+        $group: {_id:'$year'}
+    }
+])
