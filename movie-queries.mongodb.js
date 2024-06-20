@@ -44,7 +44,7 @@ db.movies.find({
 db.movies.find({
     'awards.wins': {$gte:3}
 });
-
+// SELECT title FROM movies
 db.movies.find({countries:['France']}, {title:true, _id:false});
 
 
@@ -102,7 +102,7 @@ db.movies.aggregate([
 
 //Ici, on fait deux fois la même requête, une fois via un find et une fois via une
 //aggregation. Par défaut, mieux vaut utiliser le find, plus simple, quand on peut
-db.movies.find({directors: 'George Miller'}).sort({'imdb.rating':{$gt:7}})
+db.movies.find({directors: 'George Miller'}).sort({'imdb.rating':-1})
 db.movies.aggregate({
     $match: {directors: 'George Miller'},
     $sort: {'imdb.rating':{$gt:7}}
@@ -113,6 +113,14 @@ db.movies.aggregate({
 //(count, sum, avg, max, min, etc.)
 db.movies.aggregate([
     {
-        $group: {_id:'$year'}
+        $group: {_id:'$year', moviePerYear: {$sum:1}}
     }
 ])
+
+
+db.movies.aggregate([
+    {
+        $unwind:'$cast'
+    },
+    //Rajouter un group by pour compter dans combien de film chaque acteur et actrice ont joué.
+]);
