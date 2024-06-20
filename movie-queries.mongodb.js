@@ -123,18 +123,93 @@ db.movies.aggregate([
         $unwind:'$cast'
     },
     //Rajouter un group by pour compter dans combien de film chaque acteur et actrice ont joué.
+    {
+        $group: {_id:'$cast', starredInMovies: {$count:{}}}
+    }
 ]);
 
 /**
  * Quelques aggregations à faire
  * 1. Afficher la note imdb moyenne des films par années puis faire un classement 
- * (avec un $sort) pour savoir c'est quoi les meilleures années de cinéma apparemment
+ * (avec un $sort) pour savoir quelles sont les meilleures années de cinéma apparemment
  * 2. Compter combien de films il y a par genres de film, puis faire la somme du nombre
  * d'award gagné par ces films (on peut même essayer de faire un calcul pour savoir
- * en moyenne combien d'award sont gagné par genre proportionnelement au total de film )
+ * en moyenne combien d'award sont gagnés par genre proportionnelement au total de film)
  * 3. Faire une aggregation pour afficher les acteurs et actrices avec lesquels le 
  * réalisateur Martin Scorsese a le plus collaboré (aide: on va d'abord faire un match
  * pour récupérer les films du réal puis unwind et group par cast)
  * 4. Faire une aggregation pour afficher le title des films et le nombre de comments
  * associé par film (il va falloir utiliser un $lookup aussi donc)
  */
+
+db.movies.aggregate([
+    {
+        $group: {_id:'$year', imdbAvg:{$avg: '$imdb.rating'}, moviePerYear:{$count:{}}}
+    },
+    {
+        $match: {moviePerYear:{$gt:5}}
+    },
+    {
+        $sort: {imdbAvg:-1}
+    }
+])
+
+db.movies.aggregate([
+    {
+        $unwind: '$genres'
+    },
+    {
+        $group: {
+            _id:'$genres', 
+            moviePerGenre:{$count:{}}, 
+            awardsPerGenre:{$sum:'$awards.wins'}
+        }
+    },
+    {
+        $addFields: {
+          avgAwardPerFilm: {
+            $round:{
+                $divide:[ '$awardsPerGenre','$moviePerGenre']
+            }
+        }
+        }
+    }
+])
+
+db.movies.aggregate([
+    {
+        $match:{
+            directors:'Martin Scorsese'
+        }
+    },
+    {
+        $unwind:'$cast'
+    },
+    {
+        $group: {
+            _id:'$cast',
+            starredInMovies:{$count:{}}
+        }
+    },
+    {
+        $sort: {
+            starredInMovies:-1
+        }
+    }
+])
+
+db.movies.aggregate([
+    {
+        $lookup: {
+          from: 'comments',
+          localField: '_id',
+          foreignField: 'movie_id',
+          as: 'comments'
+        }
+    },
+    {
+        $addFields: {
+          commentsCount: {$size:'$comments'}
+        }
+    }
+])
